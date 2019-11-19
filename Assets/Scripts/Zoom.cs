@@ -12,6 +12,10 @@ public class Zoom : MonoBehaviour
     private Transform t;
     private Rigidbody rb;
     private Canvas c;
+    private GameObject countryList;
+    private GameObject[] countries;
+    private GameObject currCountry;
+    private GameObject lastCountry;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +23,13 @@ public class Zoom : MonoBehaviour
         t = GetComponent<Transform>();
         rb = GetComponent<Rigidbody>();
         c = FindObjectOfType<Canvas>();
-        c.enabled = false;
+        countryList = c.transform.GetChild(0).gameObject;
+        countries = new GameObject[countryList.transform.childCount];
+        for (int i = 0; i < countries.Length; i++)
+        {
+            countries[i] = countryList.transform.GetChild(i).gameObject;
+            countries[i].SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -32,6 +42,7 @@ public class Zoom : MonoBehaviour
         else if (zoomed == false && t.localPosition.z > outLoc)
         {
             rb.velocity = Vector3.back * zoomSpd;
+            lastCountry.SetActive(false);
         }
         else
         {
@@ -44,6 +55,19 @@ public class Zoom : MonoBehaviour
         else if (t.localPosition.z > inLoc)
         {
             t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, inLoc);
+            currCountry.SetActive(true);
         }
+    }
+
+    public void CountrySelect(int i)
+    {
+        lastCountry = currCountry;
+        currCountry = countries[i];
+        
+    }
+
+    public void ToggleZoom()
+    {
+        zoomed = !zoomed;
     }
 }
