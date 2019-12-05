@@ -22,11 +22,8 @@ public class CountryClick : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("MouseDown");
-            Debug.Log(Physics.Raycast(ray, out Hit, 1000f));
             if (Physics.Raycast(ray, out Hit, 1000f) && Hit.collider.gameObject == gameObject)
             {
-                Debug.Log("Button Clicked");
                 OnClick.Invoke();
             }
         }

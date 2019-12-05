@@ -42,7 +42,6 @@ public class Zoom : MonoBehaviour
         else if (zoomed == false && t.localPosition.z > outLoc)
         {
             rb.velocity = Vector3.back * zoomSpd;
-            lastCountry.SetActive(false);
         }
         else
         {
@@ -51,6 +50,7 @@ public class Zoom : MonoBehaviour
         if (t.localPosition.z < outLoc)
         {
             t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, outLoc);
+            
         }
         else if (t.localPosition.z > inLoc)
         {
@@ -69,5 +69,13 @@ public class Zoom : MonoBehaviour
     public void ToggleZoom()
     {
         zoomed = !zoomed;
+        if(!zoomed)
+        {
+            currCountry.SetActive(false);
+            if (lastCountry != null)
+            {
+                lastCountry.SetActive(false);
+            }
+        }
     }
 }
